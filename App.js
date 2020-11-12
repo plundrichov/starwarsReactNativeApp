@@ -62,8 +62,6 @@ const TabsScreen = () => (
   </Tabs.Navigator>
 );
 
-// end of react navigation
-
 const ScreenContainer = ({ children }) => (
   <View style={styles.container}>{children}</View>
 );
@@ -161,9 +159,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginVertical: 10,
     borderRadius: 5,
-  },
-    separator: {
-    marginVertical: 8,
   },
   item: {
     display: 'flex',
