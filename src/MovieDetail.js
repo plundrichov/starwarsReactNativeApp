@@ -33,7 +33,9 @@ const MovieDetail = ({ route }) => {
 
       setEpisodes(movie);
       setLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   return (

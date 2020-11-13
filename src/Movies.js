@@ -29,7 +29,9 @@ const Movies = ({ navigation }) => {
       setEpisodes(data.movies);
 
       setLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   return (
