@@ -36,6 +36,7 @@ const Movies = ({ navigation }) => {
 
   return (
     <ScreenContainer>
+      {episodes.map(episode => (
       <Button
         // title={loading ? <ActivityIndicator /> : episodes[0].title}
         // onPress={loading ? <ActivityIndicator /> : () => navigation.push('MovieDetail', {
@@ -49,15 +50,13 @@ const Movies = ({ navigation }) => {
         //     poster:  loading ? <ActivityIndicator /> : episodes[0].poster
         //   })}
         type="clear"
-        title="Episode I"
+        title={episode.title}
         onPress={() =>
           navigation.push('MovieDetail', {
-            title: 'Episode I',
-            episode_number: '1',
-            poster: '',
+            episode_number: episode.episode_number,
           })
         }
-      />
+      />))}
 
       {/* <Button
           type="clear"

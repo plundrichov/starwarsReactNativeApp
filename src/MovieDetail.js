@@ -6,6 +6,9 @@ const ScreenContainer = ({ children }) => (
 );
 
 const MovieDetail = ({ route }) => {
+  // tady si znova vytahni data pres fetch, a zafiltruj si to podle cisla epizody
+  // v realnem svete by byl stejne jeden endpoint na seznam filmu a pak druhej na detail
+
   return (
     <ScreenContainer>
       <View style={styles.item}>
