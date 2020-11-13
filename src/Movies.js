@@ -29,65 +29,22 @@ const Movies = ({ navigation }) => {
       setEpisodes(data.movies);
 
       setLoading(false);
-    } catch (error) {
-      console.error(episodes);
-    }
+    } catch (error) {}
   }
 
   return (
     <ScreenContainer>
-      <Button
-        // title={loading ? <ActivityIndicator /> : episodes[0].title}
-        // onPress={loading ? <ActivityIndicator /> : () => navigation.push('MovieDetail', {
-        //   title: episodes[0].title,
-        //   episode_number: episodes[0].episode_number,
-        //   poster: episodes[0].poster
-        // })}
-        // onPress={() => navigation.push('MovieDetail', {
-        //     title: loading ? <ActivityIndicator /> : episodes[0].title,
-        //     episode_number:  loading ? <ActivityIndicator /> : episodes[0].page_number,
-        //     poster:  loading ? <ActivityIndicator /> : episodes[0].poster
-        //   })}
-        type="clear"
-        title="Episode I"
-        onPress={() =>
-          navigation.push('MovieDetail', {
-            title: 'Episode I',
-            episode_number: '1',
-            poster: '',
-          })
-        }
-      />
-
-      {/* <Button
-          type="clear"
-          title='Star Wars: Episode II - Attack of the Clones'
-          onPress={ () => navigation.push('MovieDetail', {
-            title: episodes[1].title,
-            episode_number: episodes[1].episode_number,
-            poster: episodes[1].poster
-          })}
-        />
+      {episodes.map(episode => (
         <Button
           type="clear"
-          title='Star Wars: Episode III - Revenge of the Sith'
-          onPress={() => navigation.push('MovieDetail', {name: 'React Native School'})}
+          title={episode.title}
+          onPress={() =>
+            navigation.push('MovieDetail', {
+              episode_number: episode.episode_number,
+            })
+          }
         />
-        <Button
-          type="clear"
-          title='Star Wars: Episode IV - A New Hope'
-          onPress={() => navigation.push('MovieDetail', {name: 'React Native School'})}
-        />
-        <Button
-          type="clear"
-          title='Star Wars: Episode V - The Empire Strikes Back'
-          onPress={() => navigation.push('MovieDetail', {name: 'React Native School'})}
-        />
-        <Button
-          type="clear"
-          title='Star Wars: Episode VI - Return of the Jedi'
-          onPress={() => navigation.push('MovieDetail', {name: 'React Native School'})}
-        /> */}
+      ))}
     </ScreenContainer>
   );
 };

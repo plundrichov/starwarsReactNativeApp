@@ -1,35 +1,57 @@
-import React from 'react';
-import { StyleSheet, Image, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Image, Text, View, ActivityIndicator } from 'react-native';
 
 const ScreenContainer = ({ children }) => (
   <View style={styles.container}>{children}</View>
 );
 
 const MovieDetail = ({ route }) => {
+  const urlMovies =
+    'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/movies.json';
+  const urlMovieImage =
+    'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/public/images/';
+
+  // movies storage
+  const [loading, setLoading] = useState(false);
+  const [episodes, setEpisodes] = useState([{}]);
+
+  // loads movies data
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // gets movies data
+  async function getData() {
+    try {
+      setLoading(true);
+      const response = await fetch(urlMovies);
+      const data = await response.json();
+
+      const movie = data.movies.filter(
+        episode => episode.episode_number === route.params.episode_number,
+      );
+
+      setEpisodes(movie);
+      setLoading(false);
+    } catch (error) {}
+  }
+
   return (
     <ScreenContainer>
       <View style={styles.item}>
         <View style={styles.cardBody}>
-          {route.params.poster && (
-            <Image
-              style={styles.posterImg}
-              source={{
-                uri: `${URL}${route.params.poster}`,
-              }}
-            />
-          )}
+          <Image
+            style={styles.posterImg}
+            source={{
+              uri: `${urlMovieImage}${episodes[0].poster}`,
+            }}
+          />
         </View>
         <View style={styles.cardFooter}>
           <View style={styles.cardTitle}>
-            {route.params.title && (
-              <Text style={styles.episodeTitle}>{route.params.title}</Text>
-            )}
+            <Text style={styles.episodeTitle}>{episodes[0].title}</Text>
           </View>
-          {route.params.episode_number && (
-            <Text style={styles.episodeNumber}>
-              {route.params.episode_number}
-            </Text>
-          )}
+          <Text style={styles.episodeNumber}>{episodes[0].episode_number}</Text>
         </View>
       </View>
     </ScreenContainer>
