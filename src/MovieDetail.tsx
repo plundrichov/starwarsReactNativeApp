@@ -1,11 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState, ReactNode } from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import { StyleSheet, Image, Text, View } from 'react-native';
 
-const ScreenContainer = ({ children }) => (
-  <View style={styles.container}>{children}</View>
+interface IChildren {
+  children: ReactNode;
+}
+
+const ScreenContainer = ({ children, ...props }: IChildren) => (
+  <View {...props} style={styles.container}>
+    {children}
+  </View>
 );
 
-const MovieDetail = ({ route }) => {
+interface IRouteProps {
+  route: any;
+}
+
+interface IEpisode {
+  title: string;
+  episode_number: string;
+  poster: string;
+}
+
+const MovieDetail = ({ route }: IRouteProps) => {
   const urlMovies =
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/movies.json';
   const urlMovieImage =
@@ -13,7 +30,13 @@ const MovieDetail = ({ route }) => {
 
   // movies storage
   const [loading, setLoading] = useState(false);
-  const [episodes, setEpisodes] = useState([{}]);
+  const [episodes, setEpisodes] = useState<IEpisode[]>([
+    {
+      title: 'title',
+      episode_number: 'episode number',
+      poster: 'poster',
+    },
+  ]);
 
   // loads movies data
   useEffect(() => {
@@ -28,7 +51,8 @@ const MovieDetail = ({ route }) => {
       const data = await response.json();
 
       const movie = data.movies.filter(
-        episode => episode.episode_number === route.params.episode_number,
+        (episode: { episode_number: any }) =>
+          episode.episode_number === route.params.episode_number,
       );
 
       setEpisodes(movie);
@@ -51,7 +75,7 @@ const MovieDetail = ({ route }) => {
         </View>
         <View style={styles.cardFooter}>
           <View style={styles.cardTitle}>
-            <Text style={styles.episodeTitle}>{episodes[0].title}</Text>
+            <Text>{episodes[0].title}</Text>
           </View>
           <Text style={styles.episodeNumber}>{episodes[0].episode_number}</Text>
         </View>
@@ -76,7 +100,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     backgroundColor: '#e7e7e7',
     border: '1px solid black',
-    borderRadius: '0.25rem',
+    borderRadius: 10,
     boxShadow: '2px 4px 18px 0px rgba(255, 255, 255, 0.38)',
   },
   cardBody: {
@@ -85,7 +109,7 @@ const styles = StyleSheet.create({
   },
   posterImg: {
     height: '100%',
-    borderRadius: '0.25rem',
+    borderRadius: 10,
   },
   cardFooter: {
     display: 'flex',
@@ -96,10 +120,6 @@ const styles = StyleSheet.create({
   cardTitle: {
     width: '155px',
   },
-  episodeTitle: {
-    fontSize: 14,
-    lineHeight: '1.5',
-  },
   episodeNumber: {
     display: 'flex',
     alignItems: 'center',
@@ -109,7 +129,7 @@ const styles = StyleSheet.create({
     width: '30px',
     fontSize: 16,
     border: '1px solid black',
-    borderRadius: '50%',
+    borderRadius: 50,
   },
 });
 

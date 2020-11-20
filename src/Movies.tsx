@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
 import { Button } from 'react-native-elements';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { StyleSheet, View } from 'react-native';
 
-const ScreenContainer = ({ children }) => (
+interface Children {
+  children: ReactNode;
+}
+
+const ScreenContainer = ({ children }: Children) => (
   <View style={styles.container}>{children}</View>
 );
 
-const Movies = ({ navigation }) => {
+const Movies = ({ navigation }: StackScreenProps<{ MovieDetail: any }>) => {
   const urlMovies =
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/movies.json';
 
   // movies storage
   const [loading, setLoading] = useState(false);
-  const [episodes, setEpisodes] = useState([]);
+  const [episodes, setEpisodes] = useState<any[]>([]);
 
   // loads movies data
   useEffect(() => {

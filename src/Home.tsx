@@ -1,7 +1,8 @@
 import React from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
 import { StyleSheet, View, Button } from 'react-native';
 
-function Home({ navigation }) {
+const Home = ({ navigation }: StackScreenProps<{ Movies: any }>) => {
   return (
     <View style={styles.container}>
       <Button
@@ -10,7 +11,7 @@ function Home({ navigation }) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
