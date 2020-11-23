@@ -1,10 +1,6 @@
 import React from 'react';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
-import {
-  createStackNavigator,
-  StackNavigationProp,
-  StackScreenProps,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Home from './Home';
 import Movies from './Movies';
 import MovieDetail from './MovieDetail';
@@ -12,7 +8,7 @@ import MovieDetail from './MovieDetail';
 type StackParamList = {
   Home: undefined;
   Movies: undefined;
-  MovieDetail: { title: string; episode_number: string };
+  MovieDetail: { episode_number: string };
 };
 
 const Stack = createStackNavigator<StackParamList>();

@@ -1,13 +1,10 @@
-import React, { useEffect, useState, ReactNode } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StyleSheet, View } from 'react-native';
+import { IEpisode } from './interfaces/IEpisodes';
 
-interface Children {
-  children: ReactNode;
-}
-
-const ScreenContainer = ({ children }: Children) => (
+const ScreenContainer: React.FC<{}> = ({ children }) => (
   <View style={styles.container}>{children}</View>
 );
 
@@ -16,8 +13,7 @@ const Movies = ({ navigation }: StackScreenProps<{ MovieDetail: any }>) => {
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/movies.json';
 
   // movies storage
-  const [loading, setLoading] = useState(false);
-  const [episodes, setEpisodes] = useState<any[]>([]);
+  const [episodes, setEpisodes] = useState<IEpisode[]>([]);
 
   // loads movies data
   useEffect(() => {
@@ -27,13 +23,9 @@ const Movies = ({ navigation }: StackScreenProps<{ MovieDetail: any }>) => {
   // gets movies data
   async function getData() {
     try {
-      setLoading(true);
       const response = await fetch(urlMovies);
-
       const data = await response.json();
       setEpisodes(data.movies);
-
-      setLoading(false);
     } catch (error) {
       console.warn(error);
     }

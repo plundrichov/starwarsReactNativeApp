@@ -1,25 +1,15 @@
-import React, { useEffect, useState, ReactNode } from 'react';
-import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, Text, View } from 'react-native';
+import { IEpisode } from './interfaces/IEpisodes';
 
-interface IChildren {
-  children: ReactNode;
-}
-
-const ScreenContainer = ({ children, ...props }: IChildren) => (
-  <View {...props} style={styles.container}>
-    {children}
-  </View>
+const ScreenContainer: React.FC<{}> = ({ children }) => (
+  <View style={styles.container}>{children}</View>
 );
 
 interface IRouteProps {
   route: any;
-}
-
-interface IEpisode {
   title: string;
   episode_number: string;
-  poster: string;
 }
 
 const MovieDetail = ({ route }: IRouteProps) => {
@@ -29,14 +19,7 @@ const MovieDetail = ({ route }: IRouteProps) => {
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/public/images/';
 
   // movies storage
-  const [loading, setLoading] = useState(false);
-  const [episodes, setEpisodes] = useState<IEpisode[]>([
-    {
-      title: 'title',
-      episode_number: 'episode number',
-      poster: 'poster',
-    },
-  ]);
+  const [episodes, setEpisodes] = useState<IEpisode[]>([]);
 
   // loads movies data
   useEffect(() => {
@@ -46,17 +29,14 @@ const MovieDetail = ({ route }: IRouteProps) => {
   // gets movies data
   async function getData() {
     try {
-      setLoading(true);
       const response = await fetch(urlMovies);
       const data = await response.json();
-
-      const movie = data.movies.filter(
-        (episode: { episode_number: any }) =>
+      const movie = data.movies.find(
+        (episode: { episode_number: string }) =>
           episode.episode_number === route.params.episode_number,
       );
 
       setEpisodes(movie);
-      setLoading(false);
     } catch (error) {
       console.warn(error);
     }
@@ -69,15 +49,15 @@ const MovieDetail = ({ route }: IRouteProps) => {
           <Image
             style={styles.posterImg}
             source={{
-              uri: `${urlMovieImage}${episodes[0].poster}`,
+              uri: `${urlMovieImage}${episodes.poster}`,
             }}
           />
         </View>
         <View style={styles.cardFooter}>
           <View style={styles.cardTitle}>
-            <Text>{episodes[0].title}</Text>
+            <Text>{episodes.title}</Text>
           </View>
-          <Text style={styles.episodeNumber}>{episodes[0].episode_number}</Text>
+          <Text style={styles.episodeNumber}>{episodes.episode_number}</Text>
         </View>
       </View>
     </ScreenContainer>
