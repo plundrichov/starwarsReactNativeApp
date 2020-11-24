@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Image, Text, View } from 'react-native';
 import { ScreenContainer } from 'react-native-screens';
 import { IEpisode } from './types/IEpisodes';
 import { StackParamList } from './types/StackParamList';
@@ -13,7 +13,7 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/public/images/';
 
   // movies storage
-  const [episodes, setEpisodes] = useState<IEpisode[]>([]);
+  const [episodes, setEpisodes] = useState<IEpisode>();
 
   // loads movies data
   useEffect(() => {
@@ -29,7 +29,6 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
         (episode: { episode_number: string }) =>
           episode.episode_number === route.params.episode_number,
       );
-
       setEpisodes(movie);
     } catch (error) {
       console.warn(error);
@@ -38,22 +37,26 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
 
   return (
     <ScreenContainer style={styles.container}>
-      <View style={styles.item}>
-        <View style={styles.cardBody}>
-          <Image
-            style={styles.posterImg}
-            source={{
-              uri: `${urlMovieImage}${episodes.poster}`,
-            }}
-          />
-        </View>
-        <View style={styles.cardFooter}>
-          <View style={styles.cardTitle}>
-            <Text>{episodes.title}</Text>
+      {episodes === undefined ? (
+        <ActivityIndicator />
+      ) : (
+        <View style={styles.item}>
+          <View style={styles.cardBody}>
+            <Image
+              style={styles.posterImg}
+              source={{
+                uri: `${urlMovieImage}${episodes.poster}`,
+              }}
+            />
           </View>
-          <Text style={styles.episodeNumber}>{episodes.episode_number}</Text>
+          <View style={styles.cardFooter}>
+            <View style={styles.cardTitle}>
+              <Text>{episodes.title}</Text>
+            </View>
+            <Text style={styles.episodeNumber}>{episodes.episode_number}</Text>
+          </View>
         </View>
-      </View>
+      )}
     </ScreenContainer>
   );
 };

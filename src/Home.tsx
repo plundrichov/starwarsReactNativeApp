@@ -5,7 +5,6 @@ import { StackParamList } from './types/StackParamList';
 
 type MoviesProps = StackScreenProps<StackParamList, 'Movies'>;
 const Home: React.FC<MoviesProps> = ({ navigation }) => {
-
   return (
     <View style={styles.container}>
       <Button
