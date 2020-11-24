@@ -4,12 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './Home';
 import Movies from './Movies';
 import MovieDetail from './MovieDetail';
-
-type StackParamList = {
-  Home: undefined;
-  Movies: undefined;
-  MovieDetail: { episode_number: string };
-};
+import { StackParamList } from './types/StackParamList';
 
 const Stack = createStackNavigator<StackParamList>();
 const episodeSpan = '. Episode';
