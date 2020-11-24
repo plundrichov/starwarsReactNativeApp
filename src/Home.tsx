@@ -1,8 +1,11 @@
 import React from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StyleSheet, View, Button } from 'react-native';
+import { StackParamList } from './types/StackParamList';
 
-const Home = ({ navigation }: StackScreenProps<{ Movies: any }>) => {
+type MoviesProps = StackScreenProps<StackParamList, 'Movies'>;
+const Home: React.FC<MoviesProps> = ({ navigation }) => {
+
   return (
     <View style={styles.container}>
       <Button
