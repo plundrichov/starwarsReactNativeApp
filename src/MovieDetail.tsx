@@ -1,18 +1,12 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, Text, View } from 'react-native';
-import { IEpisode } from './interfaces/IEpisodes';
+import { ScreenContainer } from 'react-native-screens';
+import { IEpisode } from './types/IEpisodes';
+import { StackParamList } from './types/StackParamList';
 
-const ScreenContainer: React.FC<{}> = ({ children }) => (
-  <View style={styles.container}>{children}</View>
-);
-
-interface IRouteProps {
-  route: any;
-  title: string;
-  episode_number: string;
-}
-
-const MovieDetail = ({ route }: IRouteProps) => {
+type MovieDetailProps = StackScreenProps<StackParamList, 'MovieDetail'>;
+const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
   const urlMovies =
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/movies.json';
   const urlMovieImage =
@@ -43,7 +37,7 @@ const MovieDetail = ({ route }: IRouteProps) => {
   }
 
   return (
-    <ScreenContainer>
+    <ScreenContainer style={styles.container}>
       <View style={styles.item}>
         <View style={styles.cardBody}>
           <Image

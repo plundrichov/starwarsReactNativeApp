@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
 import { StyleSheet, View } from 'react-native';
-import { IEpisode } from './interfaces/IEpisodes';
+import { IEpisode } from './types/IEpisodes';
+import { StackParamList } from './types/StackParamList';
+import { ScreenContainer } from 'react-native-screens';
 
-const ScreenContainer: React.FC<{}> = ({ children }) => (
-  <View style={styles.container}>{children}</View>
-);
-
-const Movies = ({ navigation }: StackScreenProps<{ MovieDetail: any }>) => {
+type MoviesProps = StackScreenProps<StackParamList, 'Movies'>;
+const Movies: React.FC<MoviesProps> = ({ navigation }) => {
   const urlMovies =
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/movies.json';
 
@@ -32,7 +31,7 @@ const Movies = ({ navigation }: StackScreenProps<{ MovieDetail: any }>) => {
   }
 
   return (
-    <ScreenContainer>
+    <ScreenContainer style={styles.container}>
       {episodes.map(episode => (
         <Button
           type="clear"
@@ -54,6 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ebebeb',
+    marginTop: 'auto',
   },
 });
 
