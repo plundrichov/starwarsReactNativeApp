@@ -13,23 +13,27 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
     'https://raw.githubusercontent.com/RyanHemrick/star_wars_movie_app/master/public/images/';
 
   // movies storage
-  const [episodes, setEpisodes] = useState<IEpisode>();
+  const [episode, setEpisode] = useState<IEpisode>();
 
   // loads movies data
   useEffect(() => {
     getData();
   }, []);
 
+  interface IApiResponse {
+    movies: IEpisode[];
+  }
+
   // gets movies data
   async function getData() {
     try {
       const response = await fetch(urlMovies);
-      const data = await response.json();
+      const data = (await response.json()) as IApiResponse;
+      console.log(data);
       const movie = data.movies.find(
-        (episode: { episode_number: string }) =>
-          episode.episode_number === route.params.episode_number,
+        episode => episode.episode_number === route.params.episode_number,
       );
-      setEpisodes(movie);
+      setEpisode(movie);
     } catch (error) {
       console.warn(error);
     }
@@ -37,7 +41,7 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
 
   return (
     <ScreenContainer style={styles.container}>
-      {episodes === undefined ? (
+      {episode === undefined ? (
         <ActivityIndicator />
       ) : (
         <View style={styles.item}>
@@ -45,15 +49,15 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
             <Image
               style={styles.posterImg}
               source={{
-                uri: `${urlMovieImage}${episodes.poster}`,
+                uri: `${urlMovieImage}${episode.poster}`,
               }}
             />
           </View>
           <View style={styles.cardFooter}>
             <View style={styles.cardTitle}>
-              <Text>{episodes.title}</Text>
+              <Text>{episode.title}</Text>
             </View>
-            <Text style={styles.episodeNumber}>{episodes.episode_number}</Text>
+            <Text style={styles.episodeNumber}>{episode.episode_number}</Text>
           </View>
         </View>
       )}

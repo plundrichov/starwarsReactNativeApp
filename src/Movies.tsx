@@ -24,6 +24,7 @@ const Movies: React.FC<MoviesProps> = ({ navigation }) => {
     try {
       const response = await fetch(urlMovies);
       const data = await response.json();
+
       setEpisodes(data.movies);
     } catch (error) {
       console.warn(error);
