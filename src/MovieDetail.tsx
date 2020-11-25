@@ -29,7 +29,6 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
     try {
       const response = await fetch(urlMovies);
       const data = (await response.json()) as IApiResponse;
-      console.log(data);
       const movie = data.movies.find(
         episode => episode.episode_number === route.params.episode_number,
       );
